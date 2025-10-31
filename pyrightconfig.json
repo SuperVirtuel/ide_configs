@@ -1,0 +1,33 @@
+{
+  "executionEnvironments": [
+    {
+      "root": ".",
+      "extraPaths": [
+        "./ellix-base-loader/source",
+        "./ellix-base-presta-ingester/source",
+        "./ellix-base-version-updater/source",
+        "./ellix-deadline-lib/source",
+        "./ellix-houdini-lib/source",
+        "./ellix-maya-casting-manager/source",
+        "./ellix-maya-containers-manager/source",
+        "./ellix-maya-lib/source",
+        "./ellix-maya-open-sg-from-asset/source",
+        "./ellix-maya-playblast/source",
+        "./ellix-maya-presentation-toolbox/source",
+        "./ellix-maya-process/source",
+        "./ellix-maya-scattering-manager/source",
+        "./ellix-maya-send-to-presta/source",
+        "./ellix-maya-surfacing-toolbox/source",
+        "./ellix-maya-task-selector/source",
+        "./ellix-maya-version-updater/source",
+        "./ellix-parametric-config/source",
+        "./ellix-parametric/source",
+        "./ellix-path-maker-config/source",
+        "./ellix-path-maker/source",
+        "./ellix-shotgrid-lib/source",
+        "./marsu-maya-animation-toolbox/source",
+        "./marsu-maya-process/source"
+      ]
+    }
+  ]
+}
