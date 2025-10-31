@@ -1,10 +1,45 @@
 return {
-  "CopilotC-Nvim/CopilotChat.nvim",
-  branch = "main",
-  dependencies = {
-    { "github/copilot.vim" },
-    { "nvim-lua/plenary.nvim" },
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        suggestion = {
+          enabled = true,
+          auto_trigger = true,
+          debounce = 75,
+          keymap = {
+            accept = "<C-j>",
+            accept_word = false,
+            accept_line = false,
+            next = "<M-]>",
+            prev = "<M-[>",
+            dismiss = "<C-]>",
+          },
+        },
+        panel = { enabled = false },
+        filetypes = {
+          yaml = false,
+          markdown = false,
+          help = false,
+          gitcommit = false,
+          gitrebase = false,
+          hgcommit = false,
+          svn = false,
+          cvs = false,
+          ["."] = false,
+        },
+      })
+    end,
   },
+  {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    branch = "main",
+    dependencies = {
+      { "zbirenbaum/copilot.lua" },
+      { "nvim-lua/plenary.nvim" },
+    },
   opts = {
     debug = false,
     window = {
@@ -20,12 +55,8 @@ return {
     { "<leader>co", "<cmd>CopilotChatOptimize<cr>", desc = "Optimize Code", mode = {"n", "v"} },
     { "<leader>cd", "<cmd>CopilotChatDocs<cr>", desc = "Generate Docs", mode = {"n", "v"} },
   },
-  config = function(_, opts)
-    -- Accept suggestion with Ctrl+J
-    vim.g.copilot_no_tab_map = true
-    vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
-    
-    -- Setup CopilotChat
-    require("CopilotChat").setup(opts)
-  end,
+    config = function(_, opts)
+      require("CopilotChat").setup(opts)
+    end,
+  },
 }
