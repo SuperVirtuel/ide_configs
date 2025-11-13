@@ -1,9 +1,12 @@
 #!/bin/bash
-# Install nvim config from repo to ~/.config/nvim
+# Install nvim config from repo to configured destination
 
-SRC_DIR="$(pwd)/nvim"
-DEST_DIR="$HOME/.config/nvim"
-BACKUP_DIR="$HOME/.config/nvim_backup_$(date +%Y%m%d_%H%M%S)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+source "$SCRIPT_DIR/config_profiles.sh"
+
+SRC_DIR="$SCRIPT_DIR/nvim"
+DEST_DIR=$(get_config_path "nvim")
+BACKUP_DIR="${DEST_DIR}_backup_$(date +%Y%m%d_%H%M%S)"
 
 if [ ! -d "$SRC_DIR" ]; then
   echo "Error: Source directory $SRC_DIR does not exist."

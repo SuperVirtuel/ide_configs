@@ -1,9 +1,12 @@
 #!/bin/bash
-# Install wezterm config from repo to ~/.config/wezterm
+# Install wezterm config from repo to configured destination
 
-SRC_DIR="$(pwd)/wezterm"
-DEST_DIR="$HOME/.config/wezterm"
-BACKUP_DIR="$HOME/.config/wezterm_backup_$(date +%Y%m%d_%H%M%S)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+source "$SCRIPT_DIR/config_profiles.sh"
+
+SRC_DIR="$SCRIPT_DIR/wezterm"
+DEST_DIR=$(get_config_path "wezterm")
+BACKUP_DIR="${DEST_DIR}_backup_$(date +%Y%m%d_%H%M%S)"
 
 if [ ! -d "$SRC_DIR" ]; then
   echo "Error: Source directory $SRC_DIR does not exist."

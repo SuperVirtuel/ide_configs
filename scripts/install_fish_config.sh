@@ -1,9 +1,12 @@
 #!/bin/bash
-# Install fish config from repo to ~/.config/fish
+# Install fish config from repo to configured destination
 
-SRC_DIR="$(pwd)/fish"
-DEST_DIR="$HOME/.config/fish"
-BACKUP_DIR="$HOME/.config/fish_backup_$(date +%Y%m%d_%H%M%S)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+source "$SCRIPT_DIR/config_profiles.sh"
+
+SRC_DIR="$SCRIPT_DIR/fish"
+DEST_DIR=$(get_config_path "fish")
+BACKUP_DIR="${DEST_DIR}_backup_$(date +%Y%m%d_%H%M%S)"
 
 if [ ! -d "$SRC_DIR" ]; then
   echo "Error: Source directory $SRC_DIR does not exist."
