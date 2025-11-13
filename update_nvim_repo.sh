@@ -1,6 +1,7 @@
 #!/bin/bash
-# try to remove ./nvim
-trap 'echo "./nvim doesnt exists."' ERR
+# Copy nvim config from ~/.config/nvim to this repo
+
+trap 'echo "./nvim doesnt exist."' ERR
 rm -rf ./nvim
 
 cp -r ~/.config/nvim/ ./
