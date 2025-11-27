@@ -1,35 +1,46 @@
 #!/bin/bash
 # Configuration profiles for different computers
-# This file defines installation paths for different machines
+# This file defines installation paths and repo paths for different machines
 
 # Profile definitions
-# Each profile contains paths for: fish, nvim, wezterm, vscode
+# Each profile contains:
+# - destination paths (where configs are installed on the system)
+# - repo paths (where configs are stored in this repository)
 
 declare -A PROFILES
 
-# Default profile (Linux standard paths)
-PROFILES["default_fish"]="$HOME/.config/fish"
-PROFILES["default_nvim"]="$HOME/.config/nvim"
-PROFILES["default_wezterm"]="$HOME/.config/wezterm"
-PROFILES["default_vscode"]="$HOME/.config/Code/User"
+# Desktop profile
+PROFILES["desktop_base_repo"]="$HOME/Dev/ide_configs"
+PROFILES["desktop_fish_dest"]="$HOME/.config/fish"
+PROFILES["desktop_nvim_dest"]="$HOME/.config/nvim"
+PROFILES["desktop_wezterm_dest"]="$HOME/.config/wezterm"
+PROFILES["desktop_vscode_dest"]="$HOME/.config/Code/User"
+PROFILES["desktop_fish_repo"]="${PROFILES["desktop_base_repo"]}/fish"
+PROFILES["desktop_nvim_repo"]="${PROFILES["desktop_base_repo"]}/nvim"
+PROFILES["desktop_wezterm_repo"]="${PROFILES["desktop_base_repo"]}/wezterm"
+PROFILES["desktop_vscode_repo"]="${PROFILES["desktop_base_repo"]}/vscode"
 
-# Work computer profile
-PROFILES["work_fish"]="$HOME/.config/fish"
-PROFILES["work_nvim"]="$HOME/.config/nvim"
-PROFILES["work_wezterm"]="$HOME/.config/wezterm"
-PROFILES["work_vscode"]="$HOME/.config/Code/User"
+# Laptop profile
+PROFILES["laptop_base_repo"]="/run/media/emile/2DBAE63108460002/DEV/ide_configs"
+PROFILES["laptop_fish_dest"]="$HOME/.config/fish"
+PROFILES["laptop_nvim_dest"]="$HOME/.config/nvim"
+PROFILES["laptop_wezterm_dest"]="$HOME/.config/wezterm"
+PROFILES["laptop_vscode_dest"]="$HOME/.config/Code/User"
+PROFILES["laptop_fish_repo"]="${PROFILES["laptop_base_repo"]}/fish"
+PROFILES["laptop_nvim_repo"]="${PROFILES["laptop_base_repo"]}/nvim"
+PROFILES["laptop_wezterm_repo"]="${PROFILES["laptop_base_repo"]}/wezterm"
+PROFILES["laptop_vscode_repo"]="${PROFILES["laptop_base_repo"]}/vscode"
 
-# Home computer profile
-PROFILES["home_fish"]="$HOME/.config/fish"
-PROFILES["home_nvim"]="$HOME/.config/nvim"
-PROFILES["home_wezterm"]="$HOME/.wezterm"
-PROFILES["home_vscode"]="$HOME/.vscode/config"
-
-# Mac profile
-PROFILES["mac_fish"]="$HOME/.config/fish"
-PROFILES["mac_nvim"]="$HOME/.config/nvim"
-PROFILES["mac_wezterm"]="$HOME/.config/wezterm"
-PROFILES["mac_vscode"]="$HOME/Library/Application Support/Code/User"
+# Ellipse profile
+PROFILES["ellipse_base_repo"]="$HOME/DEV/ide_configs"
+PROFILES["ellipse_fish_dest"]="$HOME/.config/fish"
+PROFILES["ellipse_nvim_dest"]="$HOME/.config/nvim"
+PROFILES["ellipse_wezterm_dest"]="$HOME/.config/wezterm"
+PROFILES["ellipse_vscode_dest"]="$HOME/.config/Code/User"
+PROFILES["ellipse_fish_repo"]="${PROFILES["ellipse_base_repo"]}/fish"
+PROFILES["ellipse_nvim_repo"]="${PROFILES["ellipse_base_repo"]}/nvim"
+PROFILES["ellipse_wezterm_repo"]="${PROFILES["ellipse_base_repo"]}/wezterm"
+PROFILES["ellipse_vscode_repo"]="${PROFILES["ellipse_base_repo"]}/vscode"
 
 # Get the current profile
 get_current_profile() {
@@ -38,7 +49,7 @@ get_current_profile() {
     if [ -f "$config_file" ]; then
         cat "$config_file"
     else
-        echo "default"
+        echo "laptop"
     fi
 }
 
@@ -51,23 +62,41 @@ set_current_profile() {
     echo "$profile" > "$config_file"
 }
 
-# Get a specific path for a config type
+# Get a specific destination path for a config type
 get_config_path() {
     local config_type="$1"
     local profile=$(get_current_profile)
-    local key="${profile}_${config_type}"
+    local key="${profile}_${config_type}_dest"
+
+    echo "${PROFILES[$key]}"
+}
+
+# Get a specific repo path for a config type
+get_repo_path() {
+    local config_type="$1"
+    local profile=$(get_current_profile)
+    local key="${profile}_${config_type}_repo"
+
+    echo "${PROFILES[$key]}"
+}
+
+# Get the base repo path for current profile
+get_base_repo_path() {
+    local profile=$(get_current_profile)
+    local key="${profile}_base_repo"
 
     echo "${PROFILES[$key]}"
 }
 
 # List available profiles
 list_profiles() {
-    echo "default"
-    echo "work"
-    echo "home"
-    echo "mac"
+    echo "desktop"
+    echo "laptop"
+    echo "ellipse"
 }
 
 # Export functions for use in other scripts
 export -f get_current_profile
 export -f get_config_path
+export -f get_repo_path
+export -f get_base_repo_path

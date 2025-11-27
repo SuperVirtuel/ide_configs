@@ -46,21 +46,19 @@ show_profile() {
 # Select profile
 select_profile() {
     echo "Available profiles:"
-    echo "1) default - Linux standard paths"
-    echo "2) work - Work computer"
-    echo "3) home - Home computer"
-    echo "4) mac - macOS"
+    echo "1) desktop - Desktop computer (~/Dev/ide_configs)"
+    echo "2) laptop - Laptop computer (/run/media/emile/2DBAE63108460002/DEV/ide_configs)"
+    echo "3) ellipse - Ellipse computer (~/DEV/ide_configs)"
     echo ""
-    read -p "Select profile [1-4]: " choice
+    read -p "Select profile [1-3]: " choice
 
     case $choice in
-        1) set_current_profile "default" ;;
-        2) set_current_profile "work" ;;
-        3) set_current_profile "home" ;;
-        4) set_current_profile "mac" ;;
+        1) set_current_profile "desktop" ;;
+        2) set_current_profile "laptop" ;;
+        3) set_current_profile "ellipse" ;;
         *)
-            print_error "Invalid choice. Using default."
-            set_current_profile "default"
+            print_error "Invalid choice. Using laptop."
+            set_current_profile "laptop"
             ;;
     esac
 
@@ -70,10 +68,10 @@ select_profile() {
 
 # Ask for operation type
 select_operation() {
-    echo "What do you want to do?"
-    echo "1) Install - Copy configs from this repo to your system"
-    echo "2) Update - Copy configs from your system to this repo"
-    echo ""
+    echo "What do you want to do?" >&2
+    echo "1) Install - Copy configs from this repo to your system" >&2
+    echo "2) Update - Copy configs from your system to this repo" >&2
+    echo "" >&2
     read -p "Select operation [1-2]: " choice
 
     case $choice in
@@ -124,12 +122,12 @@ select_programs() {
         exit 1
     fi
 
-    echo "Available programs:"
+    echo "Available programs:" >&2
     for i in "${!programs[@]}"; do
-        echo "$((i+1))) ${programs[$i]}"
+        echo "$((i+1))) ${programs[$i]}" >&2
     done
-    echo "$((${#programs[@]}+1))) all"
-    echo ""
+    echo "$((${#programs[@]}+1))) all" >&2
+    echo "" >&2
 
     read -p "Select programs (comma-separated numbers or 'all'): " choice
 
@@ -225,9 +223,9 @@ main() {
 
     for program in "${programs[@]}"; do
         if execute_operation "$operation" "$program"; then
-            ((success_count++))
+            ((success_count++)) || true
         else
-            ((fail_count++))
+            ((fail_count++)) || true
         fi
         echo ""
     done
