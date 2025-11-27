@@ -25,8 +25,8 @@ end, { desc = "Toggle diagnostics" })
 -- Window split keymaps (matching WezTerm)
 -- Note: Terminals can't reliably distinguish Ctrl+Shift+h from Ctrl+h
 -- Using Alt+Shift instead which works in both WezTerm and Neovim
-vim.keymap.set("n", "<A-S-h>", "<cmd>split<cr>", { desc = "Split Horizontal (Top/Bottom)" })
-vim.keymap.set("n", "<A-S-v>", "<cmd>vsplit<cr>", { desc = "Split Vertical (Left/Right)" })
+vim.keymap.set("n", "<leader>sh", "<cmd>split<cr>", { desc = "Split Horizontal (Top/Bottom)" })
+vim.keymap.set("n", "<leader>sv", "<cmd>vsplit<cr>", { desc = "Split Vertical (Left/Right)" })
 
 -- Close window/pane: Ctrl+Q (matching WezTerm)
 vim.keymap.set("n", "<C-q>", "<cmd>close<cr>", { desc = "Close Window" })
